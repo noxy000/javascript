@@ -1,21 +1,38 @@
 function contar() {
-    // 1. Pegamos os elementos
-    var resInicio = document.getElementById('txtn')
-    var resFim = document.getElementById('txtfim')
-    var resPasso = document.getElementById('txtp')
-    var contdor = document.getElementById('cont')
+    let ini = document.getElementById('txti')
+    let fim = document.getElementById('txtf')
+    let passo = document.getElementById('txtp')
+    let res = document.getElementById('res')
 
-    // 2. Convertemos os VALORES para números de verdade
-    var i = Number(resInicio.value)
-    var f = Number(resFim.value)
-    var p = Number(resPasso.value)
-
-    // Limpa o que estava escrito antes
-    contdor.innerText = ''
-
-    // 3. O loop agora usa as variáveis numéricas
-    for (var c = i; c <= f; c += p) {
-        contdor.innerText += ` ${c} \u{1F449}` // Acumula o valor e põe um emoji
+    // Validação de campos vazios
+    if (ini.value.length == 0 || fim.value.length == 0 || passo.value.length == 0) {
+        res.innerHTML = 'Impossível contar! Preencha todos os dados.'
+        return
     }
-    contdor.innerText += ` \u{1F3C1}` // Bandeirinha no final
+
+    let i = Number(ini.value)
+    let f = Number(fim.value)
+    let p = Number(passo.value)
+
+    // Validação do passo
+    if (p <= 0) {
+        alert('Passo inválido! Considerando PASSO 1')
+        p = 1
+    }
+
+    res.innerHTML = 'Contando: <br>'
+
+    if (i < f) {
+        // --- CONTAGEM CRESCENTE ---
+        for (let c = i; c <= f; c += p) {
+            res.innerHTML += ` ${c} \u{1F449}` // Emoji da mãozinha
+        }
+    } else {
+        // --- CONTAGEM REGRESSIVA ---
+        for (let c = i; c >= f; c -= p) {
+            res.innerHTML += ` ${c} \u{1F449}`
+        }
+    }
+    
+    res.innerHTML += ` \u{1F3C1}` // Emoji da bandeira no final
 }
